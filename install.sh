@@ -9,6 +9,11 @@ DOTFILES=~/.dotfiles
 
 cd ~
 
+## ssh
+
+mkdir -p ~/.ssh
+ln -sf $DOTFILES/ssh/config       ~/.ssh/config
+
 ## bash
 
 ln -sf $DOTFILES/bash/bashrc       ~/.bashrc
