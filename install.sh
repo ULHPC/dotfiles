@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -x # Debug
+# set -x # Debug
 
 DOTFILES=~/.dotfiles
 
