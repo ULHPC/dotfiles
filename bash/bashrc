@@ -63,6 +63,7 @@ test -r /etc/bashrc &&
 . /etc/bashrc
 
 # bring in git prompt
+test -e ~/.git-prompt.sh &&
 . ~/.git-prompt.sh
 
 # shell opts. see bash(1) for details
