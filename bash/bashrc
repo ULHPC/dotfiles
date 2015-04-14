@@ -286,6 +286,11 @@ __svn_ps1() {
   fi
 }
 
+# fix error with __git_ps1 in screen
+if [[ -f /etc/bash_completion.d/git ]] ; then
+  source /etc/bash_completion.d/git
+fi
+
 # render __git_ps1 even better so as to show activity in a git repository
 export GIT_PS1_SHOWDIRTYSTATE=1
 
