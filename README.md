@@ -1,78 +1,115 @@
 -*- mode: markdown; mode: visual-line; fill-column: 80 -*-
 
+[![License](http://img.shields.io/:license-GPL3.0-blue.svg)](LICENSE)
 
-       Time-stamp: <Dim 2015-03-29 14:28 svarrette>
+      Time-stamp: <Mon 2015-05-25 17:20 svarrette>
+       _   _ _     _   _ ____   ____   ____        _    __ _ _
+      | | | | |   | | | |  _ \ / ___| |  _ \  ___ | |_ / _(_) | ___  ___
+      | | | | |   | |_| | |_) | |     | | | |/ _ \| __| |_| | |/ _ \/ __|
+      | |_| | |___|  _  |  __/| |___  | |_| | (_) | |_|  _| | |  __/\__ \
+       \___/|_____|_| |_|_|    \____| |____/ \___/ \__|_| |_|_|\___||___/
+              
+         Copyright (c) 2015 UL HPC Management Team <hpc-sysadmins@uni.lu>
 
-         _    _ _      _    _ _____   _____     __ _       _    __ _ _          
-        | |  | | |    | |  | |  __ \ / ____|   / /| |     | |  / _(_) |         
-        | |  | | |    | |__| | |__) | |       / /_| | ___ | |_| |_ _| | ___ ___ 
-        | |  | | |    |  __  |  ___/| |      / / _` |/ _ \| __|  _| | |/ _ \ __|
-        | |__| | |____| |  | | |    | |____ / / (_| | (_) | |_| | | | |  __\__ \
-         \____/|______|_|  |_|_|     \_____/_/ \__,_|\___/ \__|_| |_|_|\___|___/
-                                                                                
-                                                                                
-       Copyright (c) 2015 UL HPC Management Team <hpc-sysadmins@uni.lu>
+| [Project Page](https://github.com/ULHPC/dotfiles) | [Sources](https://github.com/ULHPC/dotfiles) | [Issues](https://github.com/ULHPC/dotfiles/issues) |
 
-ULHPC dotfiles (bash, vim, screen etc.)
-* [Sources](https://github.com/ULHPC/dotfiles)
+# ULHPC dotfiles (bash, vim, screen etc.) 
 
 ## Synopsis
 
-ULHPC dotfiles (bash, vim, screen etc.)
+This repository offers a set of default configuration files for `bash`, `screen`, `vim` etc. suitable for the [ULHPC](http://hpc.uni.lu) environment, but also for any Linux user wishing a reasonable set of functionality for these software (better than the default one proposed by default). 
+For instance, this repository is used in the [ULHPC/bash](https://github.com/ULHPC/puppet-bash) puppet module. 
+
+In the sequel, when providing a command, `$>` denotes a prompt and is not part of the commands.
+
+## Pre-requisites
+
+You should install the following elements to use the full functionality of
+these config files:
+
+* bash
+* bash-completions
+* screen
+* git
+* subversion
+* vim
 
 ## Installation 
 
-This repository is hosted on [Github](https://github.com/ULHPC/dotfiles). 
+This repository is hosted on [Github](https://github.com/ULHPC/dotfiles).
+To install the dotfiles for the current user, you can use the proposed [`install.sh`](install.sh) script directly (assuming  [curl](http://curl.haxx.se/) is available on your system which is normally the case):
 
-**`/!\ IMPORTANT`**: Once cloned, initiate your local copy of the repository by running: 
+      $> bash <(curl --silent https://raw.githubusercontent.com/ULHPC/dotfiles/master/install.sh)
 
-    $> cd ulhpc/dotfiles
-    $> make setup
+Or you might wish to install it after cloning the repository:
 
+    $> git clone https://github.com/ULHPC/dotfiles.git ~/.dotfiles
+    $> ~/.dotfiles/install.sh
 
-## Resources
+You can run `install.sh --help` to see the available options.
 
-### Git
+_Note_: If the files already exists on your system, a backup `<file>.bak` will be created
 
-This repository make use of [Git](http://git-scm.com/) such that you should have
-it installed on your working machine: 
+## Environment
 
-       $> apt-get install git-core # On Debian-like systems
-	   $> yum install git          # On CentOS-like systems
-       $> brew install git         # On Mac OS, using [Homebrew](http://mxcl.github.com/homebrew/)
-       $> port install git         # On Mac OS, using MacPort
+These config files have been tested on Debian Linux but should work on any other unix-like system, eventually with a little tweaking.
 
-Consider these resources to become more familiar (if not yet) with Git:
+You can use the provided [`Vagrantfile`](http://docs.vagrantup.com/v2/vagrantfile/) to test it safely in a [Vagrant](vagrantup.com/) box (see [installation notes](http://docs.vagrantup.com/v2/installation/)) as follows:
 
-* [Simple Git Guide](http://rogerdudler.github.io/git-guide/)
-* [Git book](http://book.git-scm.com/index.html)
-* [Github:help](http://help.github.com/mac-set-up-git/)
-* [Git reference](http://gitref.org/)
+       $> cd /path/to/cloned/dotfiles
+	   $> vagrant up
+       [...]
+	   $> vagrant ssh
+	   (vagrant)$> /vagrant/install.sh --dry-run
 
-At least, you shall configure the following variables
+## Uninstall / Remove ULHPC dotfiles 
 
-       $> git config --global user.name "Your Name Comes Here"
-       $> git config --global user.email you@yourdomain.example.com
-       # configure colors
-       $> git config --global color.diff auto
-       $> git config --global color.status auto
-       $> git config --global color.branch auto
+The [`install.sh`](install.sh) script supports the `--delete` option to remove the previously installed dotfiles. 
 
-Note that you can create git command aliases in `~/.gitconfig` as follows: 
+     $> ~/.dotfiles/install.sh --delete
 
-       [alias]
-           up = pull origin
-           pu = push origin
-           st = status
-           df = diff
-           ci = commit -s
-           br = branch
-           w  = whatchanged --abbrev-commit
-           ls = ls-files
-           gr = log --graph --oneline --decorate
-           amend = commit --amend
+Note that the symlinks will be removed **only if** their target match the corresponding dotfile.
 
-Consider my personal [`.gitconfig`](https://github.com/Falkor/dotfiles/blob/master/git/.gitconfig) as an example -- if you decide to use it, simply copy it in your home directory and adapt the `[user]` section. 
+## BUGS
+
+Find a bug? Just post a new issue on [Github](https://github.com/ULHPC/dotfiles/issues)!
+
+## DISCLAIMER
+
+These `dotfiles` are distributed in the hope that they will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+## AUTHOR
+
+[ULHPC Team](https://hpc.uni.lu/about/team.html#system-administrators), using various contributions on the Internet, in particular:
+
+*  [Sebastien Varrette dotfiles](http://github.com/Falkor/dotfiles)
+*  [Hyacinthe Cartiaux dotfiles](http://github.com/hcartiaux/dotfiles)
+*  [Derek Payton dotfiles](http://bitbucket.org/dmpayton/dotfiles/src/tip/.bashrc)
+*  [Ryan Tomayko dotfiles](http://github.com/rtomayko/dotfiles/blob/rtomayko/.bashrc)
+*  [Sebastien Badia vim configuration](https://github.com/sbadia/grimvim)
+
+These files are released under [GNU GPL Licence v3](LICENCE).
+You may use, modify, and/or redistribute them under the terms of the GPL Licence v3.
+
+## Contributing
+
+That's quite simple:
+
+1. [Fork](https://help.github.com/articles/fork-a-repo/) it. Then once cloned your forked copy of this repository, ensure you have correctly initialize it ([Git-flow](https://github.com/nvie/gitflow), Git [submodules](.gitmodules) etc.  etc.) using: 
+
+          $> make setup
+
+2. Create your own feature branch
+
+          $> git checkout -b my-new-feature
+
+3. Commit your changes (`git commit -am 'Added some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create a new [Pull Request](https://help.github.com/articles/using-pull-requests/)
+
+This assumes that you have understood the branch layout configured for this repository -- see below. 
 
 ### [Git-flow](https://github.com/nvie/gitflow)
 
@@ -120,12 +157,3 @@ Once you have finished to commit your last changes, make the release effective b
 it will finish the release using `git-flow`, create the appropriate tag in the `production` branch and merge all things the way they should be.
 
 
-## Contributing
-
-That's quite simple:
-
-1. [Fork](https://help.github.com/articles/fork-a-repo/) it
-2. Create your own feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new [Pull Request](https://help.github.com/articles/using-pull-requests/)
