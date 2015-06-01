@@ -52,8 +52,8 @@
 : ${INPUTRC=~/.inputrc}
 
 # Local configuration
-: ${BASHRCD_BEFORE=~/.bashrc.before.d}
-: ${BASHRCD=~/.bashrc.d}
+: ${BASHRCD_BEFORE=~/.bash.before.d}
+: ${BASHRCD=~/.bash.d}
 
 # Get ride of mail notification
 unset MAILCHECK
