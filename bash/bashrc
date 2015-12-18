@@ -425,8 +425,8 @@ __set_my_prompt() {
 # -------------------------------------------------------------------
 
 # XCS Portal / XF
-if [ -f /XF/App/Scripts/xf_Globalenv.rc ]; then
-  source /XF/App/Scripts/xf_Globalenv.rc
+if [ -f /XF/v2.3/App/Scripts/xf_Globalenv.rc ]; then
+  source /XF/v2.3/App/Scripts/xf_Globalenv.rc
   export XF_VNC_GEOMETRY="-geometry 1280x1024"
 fi
 
