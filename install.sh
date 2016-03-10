@@ -424,8 +424,5 @@ if [ -n "${WITH_SSH}" ]; then
     info "${ACTION} ULHPC SSH configuration ~/.ssh/config"
     mkdir -p ~/.ssh
     add_or_remove_link "${DOTFILES}/ssh/config" ~/.ssh/config
-    if [ "${MODE}" != "--delete" ]; then
-        rmdir ~/.ssh
-    fi
 fi
 
