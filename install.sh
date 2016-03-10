@@ -378,10 +378,12 @@ fi
 
 ## Bash
 if [ -n "${WITH_BASH}" ]; then
-    info "${ACTION} ULHPC Bourne-Again shell (Bash) configuration ~/.bashrc ~/.inputrc ~/.bash_profile"
+    info "${ACTION} ULHPC Bourne-Again shell (Bash) configuration ~/.bashrc ~/.inputrc ~/.bash_profile ~/.profile ~/.bash_logout"
     add_or_remove_link "${DOTFILES}/bash/.bashrc"       ~/.bashrc
     add_or_remove_link "${DOTFILES}/bash/.inputrc"      ~/.inputrc
     add_or_remove_link "${DOTFILES}/bash/.bash_profile" ~/.bash_profile
+    add_or_remove_link "${DOTFILES}/bash/.profile"      ~/.profile
+    add_or_remove_link "${DOTFILES}/bash/.bash_logout"  ~/.bash_logout
 fi
 
 ## VI iMproved ([m]Vim)
