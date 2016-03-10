@@ -50,7 +50,7 @@ WITH_SSH=""
 # usage: info text [title]
 ##
 info() {
-    [ -z "$1" ] && print_error_and_exit "[$FUNCNAME] missing text argument"
+    [ -z "$1" ] && print_error_and_exit "[${FUNCNAME[0]}] missing text argument"
     local text=$1
     local title=$2
     # add default title if not submitted but don't print anything
@@ -148,11 +148,11 @@ EOF
 # usage: execute command
 ###
 execute() {
-    [ $# -eq 0 ] && print_error_and_exit "[$FUNCNAME] missing command argument"
-    debug "[$FUNCNAME] $*"
+    [ $# -eq 0 ] && print_error_and_exit "[${FUNCNAME[0]}] missing command argument"
+    debug "[${FUNCNAME[0]}] $*"
     [ -n "${SIMULATION}" ] && echo "(simulation) $*" || eval $*
     local exit_status=$?
-    debug "[$FUNCNAME] exit status: $exit_status"
+    debug "[${FUNCNAME[0]}] exit status: $exit_status"
     return $exit_status
 }
 
@@ -173,8 +173,8 @@ really_continue() {
 # usage: check_bin prog1 prog2 ...
 ##
 check_bin() {
-    [ $# -eq 0 ] && print_error_and_exit "[$FUNCNAME] missing argument"
-    for appl in $*; do
+    [ $# -eq 0 ] && print_error_and_exit "[${FUNCNAME[0]}] missing argument"
+    for appl in "$@"; do
         echo -n -e "=> checking availability of the command '$appl' on your system \t"
         local tmp=$(which $appl)
         [ -z "$tmp" ] && print_error_and_exit "Please install $appl or check \$PATH." || echo -e "[${COLOR_GREEN} OK ${COLOR_BACK}]"
@@ -187,12 +187,12 @@ check_bin() {
 # Upon removal, the link is deleted only if it targets the expected dotfile
 ##
 add_or_remove_link() {
-    [ $# -ne 2 ] && print_error_and_exit "[$FUNCNAME] missing argument(s). Format: $FUNCNAME <src> <dst>"
+    [ $# -ne 2 ] && print_error_and_exit "[${FUNCNAME[0]}] missing argument(s). Format: ${FUNCNAME[0]} <src> <dst>"
     local src=$1
     local dst=$2
     if [ "${MODE}" == "--delete" ]; then
         debug "removing dst='$dst' (if symlink pointing to src='$src' =? $(readlink $dst))"
-        if [[ -h $dst && "$(readlink $dst)" == "${src}" ]]; then
+        if [[ -h "${dst}" && "$(readlink "${dst}")" == "${src}" ]]; then
             warning "removing the symlink '$dst'"
             [ -n "${VERBOSE}" ] && really_continue
             execute "rm $dst"
@@ -202,29 +202,29 @@ add_or_remove_link() {
             fi
         fi
     else
-        [ ! -e $src ] && print_error_and_exit "Unable to find the dotfile '${src}'"
+        [ ! -e "${src}" ] && print_error_and_exit "Unable to find the dotfile '${src}'"
         debug "attempt to add '$dst' symlink (pointing to '$src')"
         # return if the symlink already exists
-        [[ -h $dst && "$(readlink $dst)" == "${src}" ]] && return
-        if [ -e $dst ]; then
-            warning "The file '$dst' already exists and will be backuped (as ${dst}.bak)"
-            execute "mv $dst{,.bak}"
+        [[ -h "${dst}" && "$(readlink "${dst}")" == "${src}" ]] && return
+        if [ -e "${dst}" ]; then
+            warning "The file '${dst}' already exists and will be backuped (as ${dst}.bak)"
+            execute "mv ${dst}{,.bak}"
         fi
-        execute "ln -sf $src $dst"
+        execute "ln -sf ${src} ${dst}"
     fi
 }
 
 add_or_remove_copy() {
-    [ $# -ne 2 ] && print_error_and_exit "[$FUNCNAME] missing argument(s). Format: $FUNCNAME <src> <dst>"
+    [ $# -ne 2 ] && print_error_and_exit "[${FUNCNAME[0]}] missing argument(s). Format: ${FUNCNAME[0]} <src> <dst>"
     local src=$1
     local dst=$2
-    [ ! -f $src ] && print_error_and_exit "Unable to find the dotfile '${src}'"
+    [ ! -f "${src}" ] && print_error_and_exit "Unable to find the dotfile '${src}'"
     if [ "${MODE}" == "--delete" ]; then
-        debug "removing dst='$dst'"
+        debug "removing dst='${dst}'"
         if [[ -f $dst ]]; then
             warning "removing the file '$dst'"
             [ -n "${VERBOSE}" ] && really_continue
-            execute "rm $dst"
+            execute "rm ${dst}"
             if [ -f "${dst}.bak" ]; then
                 warning "restoring ${dst} from ${dst}.bak"
                 execute "mv ${dst}.bak ${dst}"
@@ -234,17 +234,17 @@ add_or_remove_copy() {
         debug "copying '$dst' from '$src'"
         check_bin shasum
         # return if the symlink already exists
-        local checksum_src=$(shasum $src | cut -d ' ' -f 1)
-        local checksum_dst=$(shasum $dst | cut -d ' ' -f 1)
+        local checksum_src=$(shasum "${src}" | cut -d ' ' -f 1)
+        local checksum_dst=$(shasum "${dst}" | cut -d ' ' -f 1)
         if [ "${checksum_src}" == "${checksum_dst}" ]; then
             echo "   - NOT copying '$dst' from '$src' since they are the same files"
             return
         fi
-        if [ -f $dst ]; then
+        if [ -f "${dst}" ]; then
             warning "The file '$dst' already exists and will be backuped (as ${dst}.bak)"
-            execute "cp $dst{,.bak}"
+            execute "cp ${dst}{,.bak}"
         fi
-        execute "cp $src $dst"
+        execute "cp ${src} ${dst}"
     fi
 }
 
@@ -341,7 +341,7 @@ while [ $# -ge 1 ]; do
     shift
 done
 [ -z "${DOTFILES}" ] && print_error_and_exit "Wrong dotfiles directory (empty)"
-echo ${DOTFILES} | grep  '^\/' > /dev/null
+echo "${DOTFILES}" | grep  '^\/' > /dev/null
 greprc=$?
 if [ $greprc -ne 0 ]; then
     warning "Assume dotfiles directory '${DOTFILES}' is relative to the home directory"
@@ -360,7 +360,7 @@ if [ "${SCRIPTDIR}" != "${DOTFILES}" ]; then
 fi
 
 # Update the repository if already present
-[[ -z "${OFFLINE}" && -d "${DOTFILES}" ]]   && execute "( cd "$DOTFILES" ; git pull )"
+[[ -z "${OFFLINE}" && -d "${DOTFILES}" ]]   && execute "( cd ${DOTFILES} ; git pull )"
 # OR clone it there
 [[ ! -d "${DOTFILES}" ]] && execute "git clone -q --recursive --depth 1 https://github.com/ULHPC/dotfiles.git ${DOTFILES}"
 
@@ -387,7 +387,7 @@ fi
 ## VI iMproved ([m]Vim)
 if [ -n "${WITH_VIM}" ]; then
     info "${ACTION} ULHPC VIM configuration ~/.vimrc"
-    add_or_remove_link $DOTFILES/vim/.vimrc ~/.vimrc
+    add_or_remove_link "${DOTFILES}/vim/.vimrc" ~/.vimrc
     if  [ "${MODE}" != "--delete" ]; then
         warning "Run vim afterwards to download the expected package (using NeoBundle)"
         if [ "$(uname -s)" == "Linux" ]; then
@@ -400,7 +400,7 @@ fi
 ## Git
 if [ -n "${WITH_GIT}" ]; then
     info "${ACTION} ULHPC Git configuration ~/.gitconfig[.local]"
-    add_or_remove_link $DOTFILES/git/.gitconfig  ~/.gitconfig
+    add_or_remove_link "${DOTFILES}/git/.gitconfig" ~/.gitconfig
     if [ "${MODE}" != "--delete" ]; then
         setup_gitconfig_local  ~/.gitconfig.local
     else
