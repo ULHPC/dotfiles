@@ -6,3 +6,6 @@
 	path = .submodules/Makefiles
 	url = https://github.com/Falkor/Makefiles.git
 	branch = devel
+[submodule "tests/tests/helpers/assertions"]
+	path = tests/tests/helpers/assertions
+	url = https://github.com/jasonkarns/bats-assert
