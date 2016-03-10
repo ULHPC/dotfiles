@@ -143,6 +143,7 @@ setup() {
 }
 
 @test "install --ssh --delete" {
+    [ -n "${TRAVIS_CI_RUN}" ] && skip
     run $DOTFILE_INSTALL --ssh --delete
     assert_success
     assert [ ! -f "${TARGET}/.ssh/config" ]
