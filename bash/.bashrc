@@ -269,12 +269,16 @@ export SVN_EDITOR=$EDITOR
 
 ## display the current subversion revision (to be used later in the prompt)
 __svn_ps1() {
-    local svnversion="$(svnversion | sed -e "s/[:M]//g")" 2>/dev/null
+  (
+    local svnversion
+    svnversion=$(svnversion | sed -e "s/[:M]//g")
     # Continue if $svnversion is numerical
-    if let $svnversion 2>/dev/null
+    let $svnversion
+    if [[ "$?" -eq "0" ]]
     then
-        printf " (svn:%s)" "$(svnversion)"
+      printf " (svn:%s)" "$(svnversion)"
     fi
+  ) 2>/dev/null
 }
 
 # === GIT ===
