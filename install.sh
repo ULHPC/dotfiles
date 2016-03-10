@@ -34,6 +34,9 @@ COLOR_BACK="\033[0m"
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DOTFILES=~/.dotfiles
 
+GIT_URL="https://github.com/ULHPC/dotfiles.git"
+GIT_BRANCH="feature/falkor_import"
+
 # What to take care of (default is empty)
 WITH_BASH=""
 WITH_VIM=""
@@ -362,7 +365,7 @@ fi
 # Update the repository if already present
 [[ -z "${OFFLINE}" && -d "${DOTFILES}" ]]   && execute "( cd ${DOTFILES} ; git pull )"
 # OR clone it there
-[[ ! -d "${DOTFILES}" ]] && execute "git clone -q --recursive --depth 1 https://github.com/ULHPC/dotfiles.git ${DOTFILES}"
+[[ ! -d "${DOTFILES}" ]] && execute "git clone -b ${GIT_BRANCH} -q --recursive --depth 1 ${GIT_URL} ${DOTFILES}"
 
 cd ~
 
