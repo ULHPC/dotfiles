@@ -139,11 +139,11 @@ setup() {
 @test "install --ssh" {
     run $DOTFILE_INSTALL --ssh
     assert_success
-    assert_falkor_dotfile_present "ssh/.config"
+    assert_falkor_dotfile_present "ssh/config"
 }
 
 @test "install --ssh --delete" {
     run $DOTFILE_INSTALL --ssh --delete
     assert_success
-    assert_falkor_dotfile_absent "ssh/.config"
+    assert_falkor_dotfile_absent "ssh/config"
 }
