@@ -87,13 +87,13 @@ test -n "$dircolors" && (
     test -e "/etc/DIR_COLORS.$TERM"   && COLORS="/etc/DIR_COLORS.$TERM"
     test -e "$HOME/.dircolors"        && COLORS="$HOME/.dircolors"
     test ! -e "$COLORS"               && COLORS=
-    eval `$dircolors --sh $COLORS`
+    eval "$($dircolors --sh $COLORS)"
 )
 unset dircolors
 
 if [ "$UNAME" = Darwin ]; then
     # check if you're using gnu core-utils then use --color
-    test "`which ls`" = "/opt/local/bin/ls" && (
+    test "$(which ls)" = "/opt/local/bin/ls" && (
         LS_COMMON="$LS_COMMON --color"
     ) || (
         LS_COMMON="$LS_COMMON -G"
@@ -194,8 +194,8 @@ export PAGER MANPAGER
 # BASH COMPLETION
 # ----------------------------------------------------------------------
 
-bash=${BASH_VERSION%.*}; bmajor=${bash%.*}; bminor=${bash#*.}
-test -n "$PS1" && test $bmajor -gt 1 && {
+bash=${BASH_VERSION%.*}; bmajor=${bash%.*};
+test -n "$PS1" && test "$bmajor" -gt 1 && {
         # search for a bash_completion file to source
         for f in /usr/local/etc/bash_completion \
                  /opt/local/etc/bash_completion \
@@ -207,7 +207,7 @@ test -n "$PS1" && test $bmajor -gt 1 && {
             )
         done
 }
-unset bash bmajor bminor
+unset bash bmajor
 
 # ----------------------------------------------------------------------
 # OAR Batch scheduler
@@ -220,7 +220,8 @@ unset bash bmajor bminor
 function _oarsh_complete_()
 {
   local word=${COMP_WORDS[COMP_CWORD]}
-  local list=`cat $OAR_NODEFILE | uniq | tr '\n' ' '`
+  local list
+  list=$(uniq "$OAR_NODEFILE" | tr '\n' ' ')
   COMPREPLY=($(compgen -W "$list" -- "${word}"))
 }
 complete -F _oarsh_complete_ oarsh
@@ -229,7 +230,7 @@ complete -F _oarsh_complete_ oarsh
 __oar_ps1_remaining_time(){
   if [ -n "$OAR_JOB_WALLTIME_SECONDS" -a -n "$OAR_NODE_FILE" -a -r "$OAR_NODE_FILE" ]; then
     DATE_NOW=$(date +%s)
-    DATE_JOB_START=$(stat -c %Y $OAR_NODE_FILE)
+    DATE_JOB_START=$(stat -c %Y "$OAR_NODE_FILE")
     DATE_TMP=$OAR_JOB_WALLTIME_SECONDS
     ((DATE_TMP = (DATE_TMP - DATE_NOW + DATE_JOB_START) / 60))
     echo -n "[OAR$OAR_JOB_ID->$DATE_TMP]"
@@ -241,8 +242,9 @@ __oar_ps1_remaining_time(){
 test -n "$INTERACTIVE" && test -n "$OAR_NODE_FILE" && (
   echo "[OAR] OAR_JOB_ID=$OAR_JOB_ID"
   echo "[OAR] Your nodes are:"
-  sort $OAR_NODE_FILE | uniq -c | awk '{printf("      %s*%d\n",$2,$1)}END{printf("\n")}' | sed -e 's/,$//'
+  sort "$OAR_NODE_FILE" | uniq -c | awk '{printf("      %s*%d\n",$2,$1)}END{printf("\n")}' | sed -e 's/,$//'
 )
+
 
 # ----------------------------------------------------------------------
 # BASH HISTORY
@@ -267,11 +269,11 @@ export SVN_EDITOR=$EDITOR
 
 ## display the current subversion revision (to be used later in the prompt)
 __svn_ps1() {
-    local svnversion=`svnversion | sed -e "s/[:M]//g"` 2>/dev/null
+    local svnversion="$(svnversion | sed -e "s/[:M]//g")" 2>/dev/null
     # Continue if $svnversion is numerical
     if let $svnversion 2>/dev/null
     then
-        printf " (svn:%s)" `svnversion`
+        printf " (svn:%s)" "$(svnversion)"
     fi
 }
 
@@ -300,8 +302,6 @@ RESET_COLOR="\[\e[0m\]"
 BOLD_COLOR="\[\e[1m\]"
 # B&W
 WHITE="\[\e[0;37m\]"
-GRAY="\[\e[1;30m\]"
-BLACK="\[\e[0;30m\]"
 # RGB
 RED="\[\e[0;31m\]"
 GREEN="\[\e[0;32m\]"
@@ -321,16 +321,16 @@ else
 fi
 
 # Configure a set of useful variables for the prompt
-if [[ "`echo $UNAME | grep -c -i -e '^.*bsd$'`" == "1" ]] ; then
-  DOMAIN=`hostname | cut -d '.' -f 2`
+if [[ "$(echo $UNAME | grep -c -i -e '^.*bsd$')" == "1" ]] ; then
+  DOMAIN=$(hostname | cut -d '.' -f 2)
 else
-  DOMAIN=`hostname -f | cut -d '.' -f 2`
+  DOMAIN=$(hostname -f | cut -d '.' -f 2)
 fi
 
 # get virtualization information
 XENTYPE=""
 if [ -f "/sys/hypervisor/uuid" ]; then
-  if [ $(</sys/hypervisor/uuid) == "00000000-0000-0000-0000-000000000000" ]; then
+  if [ "$(</sys/hypervisor/uuid)" == "00000000-0000-0000-0000-000000000000" ]; then
       XENTYPE=",Dom0"
   else
       XENTYPE=",DomU"
@@ -342,7 +342,7 @@ if [ -z "${PS1_EXTRA}" -a -f "/proc/cmdline" ]; then
     # been set via kernel comment
     kernel_ps1_extra="$(grep PS1_EXTRA /proc/cmdline)"
     if [ -n "${kernel_ps1_extra}" ]; then
-        PS1_EXTRA=` sed -e "s/.*PS1_EXTRA=\"\?\([^ ^\t^\"]\+\)\"\?.*/\1/g" /proc/cmdline `
+      PS1_EXTRA=$( sed -e "s/.*PS1_EXTRA=\"\?\([^ ^\t^\"]\+\)\"\?.*/\1/g" /proc/cmdline )
     fi
 fi
 PS1_EXTRAINFO="${BOLD_COLOR}${DOMAIN}${XENTYPE}${RESET_COLOR}"
@@ -355,10 +355,10 @@ fi
 # exit status of the last run command.
 # Exit status 130 is also considered as good as it corresponds to a CTRL-D
 __colorized_exit_status() {
-    printf -- "\`status=\$? ; if [[ \$status = 0 || \$status = 130  ]]; then \
-                                echo -e '\[\e[01;32m\]'\$status;             \
-                              else                                           \
-                                echo -e '\[\e[01;31m\]'\$status; fi\`"
+  printf -- "\$(status=\$? ; if [[ \$status = 0 || \$status = 130  ]]; then \
+                              echo -e '\[\e[01;32m\]'\$status;              \
+                            else                                            \
+                              echo -e '\[\e[01;31m\]'\$status; fi)"
 }
 
 # Simple (basic) prompt
@@ -414,7 +414,7 @@ if [ -f /XF/v2.3/App/Scripts/xf_Globalenv.rc ]; then
 fi
 
 # PDSH options
-PDSH_SSH_ARGS_APPEND="-q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PreferredAuthentications=publickey"
+export PDSH_SSH_ARGS_APPEND="-q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PreferredAuthentications=publickey"
 
 # --------------------------------------------------------------------
 # PATH MANIPULATION FUNCTIONS (thanks rtomayko ;) )
@@ -436,9 +436,6 @@ puniq () {
 # -------------------------------------------------------------------
 # USER SHELL ENVIRONMENT
 # -------------------------------------------------------------------
-# condense PATH entries
-PATH=$(puniq $PATH)
-MANPATH=$(puniq $MANPATH)
 
 # Set the color prompt by default when interactive
 if [ -n "$PS1" ]; then
@@ -466,5 +463,8 @@ test -f ~/.bash_private && . ~/.bash_private || true
 
 PATH=$PATH:$HOME/bin:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-export PATH=`puniq $PATH`
+# condense PATH entries
+PATH="$(puniq "$PATH")"
+MANPATH="$(puniq "$MANPATH")"
+export PATH MANPATH
 
