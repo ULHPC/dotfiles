@@ -1,6 +1,6 @@
 -*- mode: markdown; mode: visual-line; fill-column: 80 -*-
 
-[![License](http://img.shields.io/:license-GPL3.0-blue.svg)](LICENSE)
+[![Licence](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html) ![By ULHPC](https://img.shields.io/badge/by-ULHPC-blue.svg)  [![Build Status](https://travis-ci.org/ULHPC/dotfiles.svg?branch=feature/falkor_import)](https://travis-ci.org/ULHPC/dotfiles) [![github](https://img.shields.io/badge/git-github- lightgray.svg)](https://github.com/ULHPC/dotfiles) [![ULHPC/dotfiles issues](https://img.shields.io/github/issues/ULHPC/dotfiles.svg)](https://github.com/ULHPC/dotfiles/issues) ![](https://img.shields.io/github/stars/ULHPC/dotfiles.svg) [![Documentation Status](https://readthedocs.org/projects/ulhpc-dotfiles/badge/?version=latest)](https://readthedocs.org/projects/ulhpc-dotfiles/?badge=latest)
 
       Time-stamp: <Mon 2015-05-25 17:20 svarrette>
        _   _ _     _   _ ____   ____   ____        _    __ _ _
@@ -8,17 +8,15 @@
       | | | | |   | |_| | |_) | |     | | | |/ _ \| __| |_| | |/ _ \/ __|
       | |_| | |___|  _  |  __/| |___  | |_| | (_) | |_|  _| | |  __/\__ \
        \___/|_____|_| |_|_|    \____| |____/ \___/ \__|_| |_|_|\___||___/
-              
-         Copyright (c) 2015 UL HPC Management Team <hpc-sysadmins@uni.lu>
 
-| [Project Page](https://github.com/ULHPC/dotfiles) | [Sources](https://github.com/ULHPC/dotfiles) | [Issues](https://github.com/ULHPC/dotfiles/issues) |
+         Copyright (c) 2015 UL HPC Management Team <hpc-sysadmins@uni.lu>
 
 # ULHPC dotfiles (bash, vim, screen etc.) 
 
 ## Synopsis
 
 This repository offers a set of default configuration files for `bash`, `screen`, `vim` etc. suitable for the [ULHPC](http://hpc.uni.lu) environment, but also for any Linux user wishing a reasonable set of functionality for these software (better than the default one proposed by default). 
-For instance, this repository is used in the [ULHPC/bash](https://github.com/ULHPC/puppet-bash) puppet module. 
+For instance, this repository is used in the [ULHPC/bash](https://github.com/ULHPC/puppet-bash) puppet module.
 
 In the sequel, when providing a command, `$>` denotes a prompt and is not part of the commands.
 
