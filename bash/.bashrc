@@ -457,7 +457,7 @@ export PKG_CONFIG_PATH
 export C_INCLUDE_PATH   CPLUS_INCLUDE_PATH   LIBRARY_PATH   DYLD_FALLBACK_LIBRARY_PATH
 
 # Eventually load your custom aliases
-test -f ~/.bash_private && . ~/.bash_private || true
+test -f ~/.bash_aliases && . ~/.bash_aliases || true
 
 # Eventually load your private settings (not exposed here)
 test -f ~/.bash_private && . ~/.bash_private || true
