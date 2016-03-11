@@ -104,7 +104,7 @@ fi
 
 # setup the main ls alias if we've established common args
 test -n "$LS_COMMON" &&
-alias ls="command ls $LS_COMMON"
+    alias ls="command ls $LS_COMMON"
 
 # these use the ls aliases above
 alias ll="ls -l"
@@ -124,7 +124,7 @@ alias ..='cd ..'
 alias grep='grep --color=auto'
 
 if [ -f ~/.bash_aliases ]; then
-  . ~/.bash_aliases
+    . ~/.bash_aliases
 fi
 
 # ----------------------------------------------------------------------
@@ -276,7 +276,7 @@ __svn_ps1() {
     let $svnversion
     if [[ "$?" -eq "0" ]]
     then
-      printf " (svn:%s)" "$(svnversion)"
+        printf " (svn:%s)" "$(svnversion)"
     fi
   ) 2>/dev/null
 }
@@ -326,19 +326,19 @@ fi
 
 # Configure a set of useful variables for the prompt
 if [[ "$(echo $UNAME | grep -c -i -e '^.*bsd$')" == "1" ]] ; then
-  DOMAIN=$(hostname | cut -d '.' -f 2)
+    DOMAIN=$(hostname | cut -d '.' -f 2)
 else
-  DOMAIN=$(hostname -f | cut -d '.' -f 2)
+    DOMAIN=$(hostname -f | cut -d '.' -f 2)
 fi
 
 # get virtualization information
 XENTYPE=""
 if [ -f "/sys/hypervisor/uuid" ]; then
-  if [ "$(</sys/hypervisor/uuid)" == "00000000-0000-0000-0000-000000000000" ]; then
-      XENTYPE=",Dom0"
-  else
-      XENTYPE=",DomU"
-  fi
+    if [ "$(</sys/hypervisor/uuid)" == "00000000-0000-0000-0000-000000000000" ]; then
+        XENTYPE=",Dom0"
+    else
+        XENTYPE=",DomU"
+    fi
 fi
 # Test the PS1_EXTRA variable
 if [ -z "${PS1_EXTRA}" -a -f "/proc/cmdline" ]; then
@@ -359,10 +359,10 @@ fi
 # exit status of the last run command.
 # Exit status 130 is also considered as good as it corresponds to a CTRL-D
 __colorized_exit_status() {
-  printf -- "\$(status=\$? ; if [[ \$status = 0 || \$status = 130  ]]; then \
-                              echo -e '\[\e[01;32m\]'\$status;              \
-                            else                                            \
-                              echo -e '\[\e[01;31m\]'\$status; fi)"
+    printf -- "\$(status=\$? ; if [[ \$status = 0 || \$status = 130  ]]; then \
+                                echo -e '\[\e[01;32m\]'\$status;              \
+                              else                                            \
+                                echo -e '\[\e[01;31m\]'\$status; fi)"
 }
 
 # Simple (basic) prompt
@@ -413,8 +413,8 @@ __set_my_prompt() {
 
 # XCS Portal / XF
 if [ -f /XF/v2.3/App/Scripts/xf_Globalenv.rc ]; then
-  source /XF/v2.3/App/Scripts/xf_Globalenv.rc
-  export XF_VNC_GEOMETRY="-geometry 1280x1024"
+    source /XF/v2.3/App/Scripts/xf_Globalenv.rc
+    export XF_VNC_GEOMETRY="-geometry 1280x1024"
 fi
 
 # PDSH options
@@ -449,8 +449,8 @@ fi
 
 # MOTD
 test -n "$INTERACTIVE" -a -n "$LOGIN" && {
-  uname -npsr
-  uptime
+    uname -npsr
+    uptime
 }
 
 export PKG_CONFIG_PATH
