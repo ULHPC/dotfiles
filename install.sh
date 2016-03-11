@@ -393,13 +393,6 @@ fi
 if [ -n "${WITH_VIM}" ]; then
     info "${ACTION} ULHPC VIM configuration ~/.vimrc"
     add_or_remove_link "${DOTFILES}/vim/.vimrc" ~/.vimrc
-    if  [ "${MODE}" != "--delete" ]; then
-        warning "Run vim afterwards to download the expected package (using NeoBundle)"
-        if [ "$(uname -s)" == "Linux" ]; then
-            warning "After Neobundle installation and vim relaunch, you might encounter the bug #156"
-            warning "        https://github.com/avelino/vim-bootstrap/issues/156"
-        fi
-    fi
 fi
 
 ## Git
