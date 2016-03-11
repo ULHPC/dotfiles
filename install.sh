@@ -304,6 +304,7 @@ EOF
     name   = $git_authorname
     email  = $git_email
     helper = $git_credential
+#   signingkey = <gpg-key-id>
 EOF
     fi
 }
