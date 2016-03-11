@@ -292,11 +292,11 @@ EOF
         [ -n "${GIT_AUTHOR_NAME}" ] && git_authorname="${GIT_AUTHOR_NAME}"
         [ -n "${GIT_AUTHOR_EMAIL}"] && git_email="${GIT_AUTHOR_EMAIL}"
         if [ -z "${git_authorname}" ]; then
-            echo -e -n  "[${COLOR_VIOLET}WARNING${COLOR_BACK}] Enter you Git author name:"
+            echo -e -n  "[${COLOR_VIOLET}WARNING${COLOR_BACK}] Enter you Git author name: "
             read -e git_authorname
         fi
         if [ -z "${git_email}" ]; then
-            echo -e -n  "[${COLOR_VIOLET}WARNING${COLOR_BACK}] Enter you Git author email:"
+            echo -e -n  "[${COLOR_VIOLET}WARNING${COLOR_BACK}] Enter you Git author email: "
             read -e git_email
         fi
         cat >> $gitconfig_local <<EOF
