@@ -404,7 +404,7 @@ __set_compact_prompt() {
 # This prompt is perfect for terminal with black background, in my case the
 # Vizor color set (see http://visor.binaryage.com/) or iTerm2
 __set_my_prompt() {
-    PS1="$(__colorized_exit_status) ${LIGHT_CYAN}[\t]${RESET_COLOR} ${COLOR_USER}\u${RESET_COLOR}@${CYAN_UNDERLINE}\h${RESET_COLOR}(${PS1_EXTRAINFO})                       ${BLUE}\W${RESET_COLOR}${GREEN}\$(__git_ps1 \" (%s)\")\$(__svn_ps1)${RESET_COLOR}${P}> "
+    PS1="$(__colorized_exit_status) ${LIGHT_CYAN}[\t]${RESET_COLOR} ${COLOR_USER}\u${RESET_COLOR}@${CYAN_UNDERLINE}\h${RESET_COLOR}(${PS1_EXTRAINFO}) ${BLUE}\W${RESET_COLOR}${GREEN}\$(__git_ps1 \" (%s)\")\$(__svn_ps1)${RESET_COLOR}${P}> "
 }
 
 # -------------------------------------------------------------------
