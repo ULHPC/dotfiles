@@ -346,7 +346,7 @@ if [ -z "${PS1_EXTRA}" -a -f "/proc/cmdline" ]; then
     # been set via kernel comment
     kernel_ps1_extra="$(grep PS1_EXTRA /proc/cmdline)"
     if [ -n "${kernel_ps1_extra}" ]; then
-      PS1_EXTRA=$( sed -e "s/.*PS1_EXTRA=\"\?\([^ ^\t^\"]\+\)\"\?.*/\1/g" /proc/cmdline )
+        PS1_EXTRA=$( sed -e "s/.*PS1_EXTRA=\"\?\([^ ^\t^\"]\+\)\"\?.*/\1/g" /proc/cmdline )
     fi
 fi
 PS1_EXTRAINFO="${BOLD_COLOR}${DOMAIN}${XENTYPE}${RESET_COLOR}"
