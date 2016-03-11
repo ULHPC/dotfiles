@@ -81,7 +81,6 @@ setup() {
     assert_falkor_dotfile_present "bash/.bash_profile"
     assert_falkor_dotfile_present "bash/.profile"
     assert_falkor_dotfile_present "bash/.bash_logout"
-    assert [ -e "${TARGET}/.bash_aliases" ]
 }
 
 @test "install --bash --delete" {
@@ -92,7 +91,6 @@ setup() {
     assert_falkor_dotfile_absent "bash/.bash_profile"
     assert_falkor_dotfile_absent "bash/.profile"
     assert_falkor_dotfile_absent "bash/.bash_logout"
-    assert [ ! -e "${TARGET}/.bash_aliases" ]
 }
 
 
