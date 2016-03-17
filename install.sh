@@ -283,11 +283,15 @@ EOF
         local git_credential='cache'
         local git_authorname=
         local git_email=
+        local passwd_field=
+
         if [ "$(uname -s)" == "Darwin" ]; then
             git_authorname=$(dscl . -read "/Users/$(whoami)" RealName | tail -n1)
             git_credential='osxkeychain'
         elif [ "$(uname -s)" == "Linux" ]; then
-            git_authorname=$(getent passwd "$(whoami)" | cut -d ':' -f 5 | cut -d ',' -f 1)
+            passwd_field=$(getent passwd "$(whoami)" | cut -d ':' -f 5 | cut -d ',' -f 1)
+            git_authorname="$(echo -n "${passwd_field}" | sed -e 's/\(.*\) <.*$/\1/g')"
+            git_email="$(echo -n "${passwd_field}" | sed -e 's/[^<]*<\(.*\)>/\1/g')"
         fi
         [ -n "${GIT_AUTHOR_NAME}" ] && git_authorname="${GIT_AUTHOR_NAME}"
         [ -n "${GIT_AUTHOR_EMAIL}" ] && git_email="${GIT_AUTHOR_EMAIL}"
