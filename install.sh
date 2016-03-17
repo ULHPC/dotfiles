@@ -15,7 +15,7 @@
 
 ### Global variables
 VERSION=0.1
-COMMAND=$(basename $0)
+COMMAND=$(basename "$0")
 VERBOSE=""
 DEBUG=""
 SIMULATION=""
@@ -153,7 +153,7 @@ EOF
 execute() {
     [ $# -eq 0 ] && print_error_and_exit "[${FUNCNAME[0]}] missing command argument"
     debug "[${FUNCNAME[0]}] $*"
-    [ -n "${SIMULATION}" ] && echo "(simulation) $*" || eval $*
+    [ -n "${SIMULATION}" ] && echo "(simulation) $*" || eval "$@"
     local exit_status=$?
     debug "[${FUNCNAME[0]}] exit status: $exit_status"
     return $exit_status
@@ -179,7 +179,7 @@ check_bin() {
     [ $# -eq 0 ] && print_error_and_exit "[${FUNCNAME[0]}] missing argument"
     for appl in "$@"; do
         echo -n -e "=> checking availability of the command '$appl' on your system \t"
-        local tmp=$(which $appl)
+        local tmp=$(which "${appl}")
         [ -z "$tmp" ] && print_error_and_exit "Please install $appl or check \$PATH." || echo -e "[${COLOR_GREEN} OK ${COLOR_BACK}]"
     done
 }
@@ -194,11 +194,11 @@ add_or_remove_link() {
     local src=$1
     local dst=$2
     if [ "${MODE}" == "--delete" ]; then
-        debug "removing dst='$dst' (if symlink pointing to src='$src' =? $(readlink $dst))"
+        debug "removing dst='${dst}' (if symlink pointing to src='${src}' =? $(readlink "${dst}"))"
         if [[ -h "${dst}" && "$(readlink "${dst}")" == "${src}" ]]; then
-            warning "removing the symlink '$dst'"
+            warning "removing the symlink '${dst}'"
             [ -n "${VERBOSE}" ] && really_continue
-            execute "rm $dst"
+            execute "rm '${dst}'"
             if [ -f "${dst}.bak" ]; then
                 warning "restoring ${dst} from ${dst}.bak"
                 execute "mv ${dst}.bak ${dst}"
@@ -263,7 +263,7 @@ setup_gitconfig_local () {
     if [ ! -f "${gitconfig_local}" ]; then
         info "setup Local / private gitconfig '${gitconfig_local}'"
         [ -n "${SIMULATION}" ] && return
-        cat > $gitconfig_local <<'EOF'
+        cat > "${gitconfig_local}" <<'EOF'
 # -*- mode: gitconfig; -*-
 ################################################################################
 #  .gitconfig.local -- Private part of the GIT configuration
@@ -284,13 +284,13 @@ EOF
         local git_authorname=
         local git_email=
         if [ "$(uname -s)" == "Darwin" ]; then
-            git_authorname=$(dscl . -read /Users/$(whoami) RealName | tail -n1)
+            git_authorname=$(dscl . -read "/Users/$(whoami)" RealName | tail -n1)
             git_credential='osxkeychain'
         elif [ "$(uname -s)" == "Linux" ]; then
-            git_authorname=$(getent passwd $(whoami) | cut -d ':' -f 5 | cut -d ',' -f 1)
+            git_authorname=$(getent passwd "$(whoami)" | cut -d ':' -f 5 | cut -d ',' -f 1)
         fi
         [ -n "${GIT_AUTHOR_NAME}" ] && git_authorname="${GIT_AUTHOR_NAME}"
-        [ -n "${GIT_AUTHOR_EMAIL}"] && git_email="${GIT_AUTHOR_EMAIL}"
+        [ -n "${GIT_AUTHOR_EMAIL}" ] && git_email="${GIT_AUTHOR_EMAIL}"
         if [ -z "${git_authorname}" ]; then
             echo -e -n  "[${COLOR_VIOLET}WARNING${COLOR_BACK}] Enter you Git author name: "
             read -e git_authorname
@@ -355,7 +355,7 @@ info "About to ${ACTION} ULHPC dotfiles from ${DOTFILES}"
 [ -z "${FORCE}" ] && really_continue
 
 if [ "${SCRIPTDIR}" != "${DOTFILES}" ]; then
-    if [ -d "${SCRIPTDIR}/.git" -a ! -e "${DOTFILES}" ]; then
+    if [ -d "${SCRIPTDIR}/.git" ] && [ ! -e "${DOTFILES}" ]; then
         # We are (hopefully) in a clone of the ULHPC dotfile repository.
         # Make $DOTFILES be a symlink to this clone.
         info "make '${DOTFILES}' a symlink to ${SCRIPTDIR}"
