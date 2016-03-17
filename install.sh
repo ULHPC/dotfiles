@@ -255,7 +255,7 @@ add_or_remove_copy() {
 # courtesy of https://github.com/holman/dotfiles/blob/master/script/bootstrap
 setup_gitconfig_local () {
     local gitconfig_local=${1:-"$HOME/.gitconfig.local"}
-    local dotfile_gitconfig_local="${DOTFILES}/git/$(basename ${gitconfig_local})"
+    local dotfile_gitconfig_local="${DOTFILES}/git/$(basename "${gitconfig_local}")"
     if [ -f "${dotfile_gitconfig_local}" ]; then
         add_or_remove_link "${dotfile_gitconfig_local}" "${gitconfig_local}"
         return
@@ -303,7 +303,7 @@ EOF
             echo -e -n  "[${COLOR_VIOLET}WARNING${COLOR_BACK}] Enter you Git author email: "
             read -e git_email
         fi
-        cat >> $gitconfig_local <<EOF
+        cat >> "${gitconfig_local}" <<EOF
 [user]
     name   = $git_authorname
     email  = $git_email
