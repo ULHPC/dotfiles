@@ -368,9 +368,9 @@ if [ "${SCRIPTDIR}" != "${DOTFILES}" ]; then
 fi
 
 # OR clone it there
-[[ ! -d "${DOTFILES}" ]] && execute "git clone -b ${GIT_BRANCH} -q ${GIT_URL} ${DOTFILES}"
+[[ ! -d "${DOTFILES}" ]] && execute "git clone -b ${GIT_BRANCH} ${GIT_URL} ${DOTFILES}"
 # Update the repository if already present
-[[ -z "${OFFLINE}" && -d "${DOTFILES}" ]]   && execute "( cd ${DOTFILES} ; git pull -q ; git submodule init -q ; git submodule update -q )"
+[[ -z "${OFFLINE}" && -d "${DOTFILES}" ]] && execute "( cd ${DOTFILES} ; git pull ; git submodule init ; git submodule update )"
 
 cd ~
 
