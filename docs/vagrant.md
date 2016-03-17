@@ -32,4 +32,4 @@ Then you can ssh into the machine afterwards:
 
 Once within the box, feel free to try the ULHPC dotfiles. You can install them by running:
 
-      $> /vagrant/install.sh      # /vagrant mounts the root of the Falkor's dotfile repository
+      $> /vagrant/install.sh      # /vagrant mounts the root of the ULHPC dotfiles repository

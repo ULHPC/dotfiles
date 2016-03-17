@@ -2,7 +2,7 @@
 
 ## Installation
 
-You can use the `install.sh` script featured with the [ULHPC dotfile](https://github.com/ULHPC/dotfile) repository.
+You can use the `install.sh` script featured with the [ULHPC dotfiles](https://github.com/ULHPC/dotfiles) repository.
 
 ``` bash
 $> cd ~/.dotfiles

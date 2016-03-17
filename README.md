@@ -50,7 +50,7 @@ If the location of the local repository is not `~/.dotfiles`, the `install.sh` s
 
 To clone this repository directly into `~/.dotfiles/`, proceed as follows
 
-        $> git clone https://github.com/Falkor/dotfiles.git ~/.dotfiles
+        $> git clone https://github.com/ULHPC/dotfiles.git ~/.dotfiles
 
 **`/!\ IMPORTANT`**: Once cloned, initiate your local copy of the repository by running:
 
@@ -99,7 +99,7 @@ Note that if you wish to __upgrade__ the [Git submodules](.gitmodules) to the la
 
      $> make upgrade
 
-## Uninstalling / Removing Falkor's dotfile
+## Uninstalling / Removing the ULHPC dotfiles
 
 You can use `install.sh --delete` to remove the ULHPC dotfiles.
 
