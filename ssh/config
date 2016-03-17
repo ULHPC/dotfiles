@@ -1,9 +1,1 @@
-Host chaos-cluster
-    Hostname access-chaos.uni.lu
-
-Host gaia-cluster
-    Hostname access-gaia.uni.lu
-
-Host *-cluster
-    Port 8022
-    ForwardAgent no
+.config
