@@ -9,7 +9,7 @@
       | |_| | |___|  _  |  __/| |___  | |_| | (_) | |_|  _| | |  __/\__ \
        \___/|_____|_| |_|_|    \____| |____/ \___/ \__|_| |_|_|\___||___/
 
-         Copyright (c) 2015 UL HPC Management Team <hpc-sysadmins@uni.lu>
+         Copyright (c) 2013-2016 UL HPC Management Team <hpc-sysadmins@uni.lu>
 
 # ULHPC dotfiles (bash, vim, screen etc.) 
 
@@ -23,7 +23,7 @@ In the sequel, when providing a command, `$>` denotes a prompt and is not part o
 ## Pre-requisites
 
 You should install the following elements to use the full functionality of
-these config files:
+these configuration files:
 
 * bash
 * bash-completions
@@ -32,126 +32,132 @@ these config files:
 * subversion
 * vim
 
-## Installation 
 
-This repository is hosted on [Github](https://github.com/ULHPC/dotfiles).
-To install the dotfiles for the current user, you can use the proposed [`install.sh`](install.sh) script directly (assuming  [curl](http://curl.haxx.se/) is available on your system which is normally the case):
+## Installation
 
-      $> bash <(curl --silent https://raw.githubusercontent.com/ULHPC/dotfiles/master/install.sh)
+### All-in-one git-free install
 
-Or you might wish to install it after cloning the repository:
+Using `curl` (adapt the `--all` option to whatever you prefer -- see below table):
 
-    $> git clone https://github.com/ULHPC/dotfiles.git ~/.dotfiles
-    $> ~/.dotfiles/install.sh
+``` bash
+$> curl -fsSL https://raw.githubusercontent.com/ULHPC/dotfiles/master/install.sh | bash -s -- --all
+```
 
-You can run `install.sh --help` to see the available options.
+### Using Git and the embedded Makefile
 
-_Note_: If the files already exists on your system, a backup `<file>.bak` will be created
+This repository is hosted on [Github](https://github.com/ULHPC/dotfiles). You can clone the repository wherever you want.
+If the location of the local repository is not `~/.dotfiles`, the `install.sh` script will create a symlink `~/.dotfiles` pointing to the location of the repository.
 
-## Environment
+To clone this repository directly into `~/.dotfiles/`, proceed as follows
 
-These config files have been tested on Debian Linux but should work on any other unix-like system, eventually with a little tweaking.
+        $> git clone https://github.com/Falkor/dotfiles.git ~/.dotfiles
 
-You can use the provided [`Vagrantfile`](http://docs.vagrantup.com/v2/vagrantfile/) to test it safely in a [Vagrant](vagrantup.com/) box (see [installation notes](http://docs.vagrantup.com/v2/installation/)) as follows:
+**`/!\ IMPORTANT`**: Once cloned, initiate your local copy of the repository by running:
 
-       $> cd /path/to/cloned/dotfiles
-	   $> vagrant up
-       [...]
-	   $> vagrant ssh
-	   (vagrant)$> /vagrant/install.sh --dry-run
+        $> cd ~/.dotfiles
+        $> make setup
 
-## Uninstall / Remove ULHPC dotfiles 
+This will initiate the [Git submodules of this repository](.gitmodules) and setup the [git flow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) layout for this repository.
 
-The [`install.sh`](install.sh) script supports the `--delete` option to remove the previously installed dotfiles. 
+Now to install all the dotfiles, run:
 
-     $> ~/.dotfiles/install.sh --delete
+~~~bash
+    $> make install
+~~~
 
-Note that the symlinks will be removed **only if** their target match the corresponding dotfile.
+### Using Git and the embedded `install.sh` script
 
-## BUGS
+The above `make install` command actually runs (see `.Makefile.after`):
 
-Find a bug? Just post a new issue on [Github](https://github.com/ULHPC/dotfiles/issues)!
+~~~bash
+     $> ./install.sh --all   # Equivalent of 'make install'
+~~~
 
-## DISCLAIMER
+Note that __by default__ (_i.e._ without option), the `install.sh` script does nothing __except__ cloning the ULHPC/dotfilesirectory if it does not yet exists (in `~/.dotfiles` by default).
 
-These `dotfiles` are distributed in the hope that they will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+* if you __do not want to install everything__ but only a subpart, kindly refer to the below table to find the proper command-line argument to use. Ex:
 
-## AUTHOR
+```bash
+         $> ./install.sh --vim --git
+```
 
-[ULHPC Team](https://hpc.uni.lu/about/team.html#system-administrators), using various contributions on the Internet, in particular:
+* if you want to install everything in a row, use as suggested above the `--all` option
 
-*  [Sebastien Varrette dotfiles](http://github.com/Falkor/dotfiles)
-*  [Hyacinthe Cartiaux dotfiles](http://github.com/hcartiaux/dotfiles)
-*  [Derek Payton dotfiles](http://bitbucket.org/dmpayton/dotfiles/src/tip/.bashrc)
-*  [Ryan Tomayko dotfiles](http://github.com/rtomayko/dotfiles/blob/rtomayko/.bashrc)
-*  [Sebastien Badia vim configuration](https://github.com/sbadia/grimvim)
 
-These files are released under [GNU GPL Licence v3](LICENCE).
-You may use, modify, and/or redistribute them under the terms of the GPL Licence v3.
+## Updating / Upgrading
 
-## Contributing
+Upgrading is normally as simple as:
 
-That's quite simple:
+     $> make -C ~/.dotfiles update
 
-1. [Fork](https://help.github.com/articles/fork-a-repo/) it. Then once cloned your forked copy of this repository, ensure you have correctly initialize it ([Git-flow](https://github.com/nvie/gitflow), Git [submodules](.gitmodules) etc.  etc.) using: 
+OR, if you prefer a more atomic approach:
 
-          $> make setup
+     $> cd ~/.dotfiles
+     $> make update
 
-2. Create your own feature branch
+Note that if you wish to __upgrade__ the [Git submodules](.gitmodules) to the latest version, you should run:
 
-          $> git checkout -b my-new-feature
+     $> make upgrade
 
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new [Pull Request](https://help.github.com/articles/using-pull-requests/)
+## Uninstalling / Removing Falkor's dotfile
 
-This assumes that you have understood the branch layout configured for this repository -- see below. 
+You can use `install.sh --delete` to remove the ULHPC dotfiles.
 
-### [Git-flow](https://github.com/nvie/gitflow)
+__`/!\ IMPORTANT`__: pay attention to use the options matching you installation package.
 
-The Git branching model for this repository follows the guidelines of
-[gitflow](http://nvie.com/posts/a-successful-git-branching-model/).
-In particular, the central repository holds two main branches with an infinite lifetime:
+* if you have installed __all__ the dotfiles, run:
 
-* `production`: the *production-ready* branch
-* `master`: the main branch where the latest developments interviene. This is the *default* branch you get when you clone the repository.
+```bash
+     $> ./install.sh --delete --all     # OR make uninstall
+```
 
-Thus you are more than encouraged to install the [git-flow](https://github.com/nvie/gitflow) extensions following the [installation procedures](https://github.com/nvie/gitflow/wiki/Installation) to take full advantage of the proposed operations. The associated [bash completion](https://github.com/bobthecow/git-flow-completion) might interest you also.
+* if you have installed __only__ a subpart of the dotfiles, adapt the command line option. Ex:
 
-### Releasing mechanism
+```bash
+     $> ./install.sh --delete --vim --git
+```
 
-The operation consisting of releasing a new version of this repository is automated by a set of tasks within the root `Makefile`.
 
-In this context, a version number have the following format:
+## What's included and how to customize?
 
-      <major>.<minor>.<patch>[-b<build>]
+| Tools                                                                          | Type                  | Installation            | Documentation                                |
+|--------------------------------------------------------------------------------|-----------------------|-------------------------|----------------------------------------------|
+| [Bourne-Again shell (bash)](http://tiswww.case.edu/php/chet/bash/bashtop.html) | shell                 | `./install.sh --bash`   | [`bash/README.md`](bash/README.md)           |
+| [VI iMproved (vim)](http://www.vim.org/)                                       | editor                | `./install.sh --vim`    | [`vim/README.md`](vim/README.md)             |
+| [Git `--fast-version-control`](https://git-scm.com/)                           | VCS                   | `./install.sh --git`    | [`git/README.md`](git/README.md)             |
+| [GNU screen](https://www.gnu.org/software/screen/)                             | terminal multiplexers | `./install.sh --screen` | [`screen/README.md`](screen/README.md)       |
+| [SSH](http://www.openssh.com/)                                                 | remote shell          | `./install.sh --ssh`    | [`ssh/README.md`](ssh/README.md)       |
+|                                                                                |                       |                         |                                              |
 
-where:
+As mentioned above, if you want to install all dotfiles in one shot, just use
 
-* `< major >` corresponds to the major version number
-* `< minor >` corresponds to the minor version number
-* `< patch >` corresponds to the patching version number
-* (eventually) `< build >` states the build number _i.e._ the total number of commits within the `master` branch.
+      $> ./install.sh --all      # OR 'make install'
 
-Example: \`1.0.0-b28\`
+## Issues / Feature request
 
-The current version number is stored in the root file `VERSION`. __/!\ NEVER MAKE ANY MANUAL CHANGES TO THIS FILE__
+You can submit bug / issues / feature request using the [`ULHPC/dotfiles` Project Tracker](https://github.com/ULHPC/dotfiles/issues) or the [UL HPC Tracker](https://hpc-tracker.uni.lu).
 
-For more information on the version, run:
+## Developments / Contributing to the code
 
-     $> make versioninfo
+If you want to contribute to the code, you shall be aware of the way this repository is organized and developed.
+These elements are detailed on `docs/contributing/`
 
-If a new version number such be bumped, you simply have to run:
+## Licence
 
-      $> make start_bump_{major,minor,patch}
+This project is released under the terms of the [GPL-3.0](LICENCE) licence.
 
-This will start the release process for you using `git-flow`.
-Once you have finished to commit your last changes, make the release effective by running:
+[![Licence](https://www.gnu.org/graphics/gplv3-88x31.png)](http://www.gnu.org/licenses/gpl-3.0.html)
 
-      $> make release
+## Resources
 
-it will finish the release using `git-flow`, create the appropriate tag in the `production` branch and merge all things the way they should be.
+We have created this repository using various contributions on the Internet, in particular:
+
+* [Your unofficial guide to dotfiles on GitHub](https://dotfiles.github.io/)
+* [S.Varrette's dotfiles](https://github.com/Falkor/dotfiles)
+* [H.Cartiaux's dotfiles](https://github.com/hcartiaux/dotfiles)
+* [Holman's does dotfiles](https://github.com/holman/dotfiles), for his idea of bundling the [homebrew](http://brew.sh) configuration
+* [Mathias’s dotfiles](https://github.com/mathiasbynens/dotfiles),  for featuring `~/.osx` _i.e._ sensible hacker defaults for OS X;
+* [Awesome dotfiles](https://github.com/webpro/awesome-dotfiles), a curated list of dotfiles resources. Inspired by the [awesome](https://github.com/sindresorhus/awesome) list thing.
+* [Carlo's dotfiles](https://github.com/caarlos0/dotfiles)
 
 

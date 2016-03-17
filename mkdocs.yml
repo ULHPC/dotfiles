@@ -1,0 +1,20 @@
+site_name: ULHPC/dotfiles
+pages:
+- Home: 'index.md'
+- Overview and Installation: 'overview.md'
+- Shell:
+  - Bourne-Again Shell (bash): 'bash/README.md'
+- Editor:
+  - VIm: 'vim/README.md'
+- Misc:
+  - Git: 'git/README.md'
+  - GNU Screen: 'screen/README.md'
+  - SSH: 'ssh/README.md'
+- Tests with Vagrant: 'vagrant.md'
+- Documentation (RTFD): 'rtfd.md'
+- Contributing:
+  - 'Overview': 'contributing/index.md'
+  - 'Directory Layout': 'contributing/layout.md'
+  - 'Repository Setup and Developments': 'contributing/setup.md'
+  - 'Semantic Versioning': 'contributing/versioning.md'
+theme: readthedocs
