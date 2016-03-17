@@ -35,7 +35,7 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DOTFILES=~/.dotfiles
 
 GIT_URL="https://github.com/ULHPC/dotfiles.git"
-GIT_BRANCH="feature/falkor_import"
+GIT_BRANCH="${TRAVIS_BRANCH:-master}"
 
 # What to take care of (default is empty)
 WITH_BASH=""
