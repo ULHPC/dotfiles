@@ -10,11 +10,11 @@ This project is released under the terms of the [GPL-3.0 Licence](LICENSE). So y
 3. **`/!\ IMPORTANT`**: Once cloned, initiate your local copy of the repository ([Git-flow](https://github.com/nvie/gitflow), Git [submodules](.gitmodules) etc.) by running:
 
         $> cd dotfiles
-		$> make setup
+        $> make setup
 
 4. Create your own feature branch
 
-          $> git checkout -b my-new-feature
+        $> git checkout -b my-new-feature
 
 5. Commit your changes (`git commit -am 'Added some feature'`)
 6. Push to the branch (`git push origin my-new-feature`)
