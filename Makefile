@@ -37,9 +37,6 @@ GIT_DIRTY      = $(shell git diff --shortstat 2> /dev/null | tail -n1 )
 # Format: '<url>[|<branch>]' - don't forget the quotes. if branch is ignored, 'master' is used
 #GIT_SUBTREE_REPOS = 'https://github.com/ULHPC/easybuild-framework.git|develop'  \
 					 'https://github.com/hpcugent/easybuild-wiki.git'
-GITSTATS     = ./.submodules/gitstats/gitstats
-GITSTATS_DIR = gitstats
-
 VERSION  = $(shell [ -f VERSION ] && head VERSION || echo "0.0.1")
 # OR try to guess directly from the last git tag
 #VERSION    = $(shell  git describe --tags $(LAST_TAG_COMMIT) | sed "s/^$(TAG_PREFIX)//")
@@ -228,17 +225,6 @@ endif
 # Clean option
 clean:
 	@echo nothing to be cleaned for the moment
-
-
-# Perform various git statistics
-stats:
-	@if [ ! -d $(GITSTATS_DIR) ]; then mkdir -p $(GITSTATS_DIR); fi
-	$(GITSTATS) . $(GITSTATS_DIR)/
-
-# # force recompilation
-# force :
-# 	@touch $(MAIN_TEX)
-# 	@$(MAKE)
 
 
 # print help message

@@ -57,7 +57,7 @@ To clone this repository directly into `~/.dotfiles/`, proceed as follows
         $> cd ~/.dotfiles
         $> make setup
 
-This will initiate the [Git submodules of this repository](.gitmodules) and setup the [git flow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) layout for this repository.
+This will initiate the Git submodules of this repository and setup the [git flow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) layout for this repository.
 
 Now to install all the dotfiles, run:
 
@@ -73,7 +73,7 @@ The above `make install` command actually runs (see `.Makefile.after`):
      $> ./install.sh --all   # Equivalent of 'make install'
 ~~~
 
-Note that __by default__ (_i.e._ without option), the `install.sh` script does nothing __except__ cloning the ULHPC/dotfilesirectory if it does not yet exists (in `~/.dotfiles` by default).
+Note that __by default__ (_i.e._ without option), the `install.sh` script does nothing __except__ cloning the repository if the dotfiles directory does not yet exists (in `~/.dotfiles` by default).
 
 * if you __do not want to install everything__ but only a subpart, kindly refer to the below table to find the proper command-line argument to use. Ex:
 
@@ -95,7 +95,7 @@ OR, if you prefer a more atomic approach:
      $> cd ~/.dotfiles
      $> make update
 
-Note that if you wish to __upgrade__ the [Git submodules](.gitmodules) to the latest version, you should run:
+Note that if you wish to __upgrade__ the Git submodules to the latest version, you should run:
 
      $> make upgrade
 

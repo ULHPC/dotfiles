@@ -7,7 +7,7 @@ This project is released under the terms of the [GPL-3.0 Licence](LICENSE). So y
         $> cd ~/git/github.com/<YOUR_LOGIN>
         $> git clone https://github.com/<YOUR_LOGIN>/dotfiles.git
 
-3. **`/!\ IMPORTANT`**: Once cloned, initiate your local copy of the repository ([Git-flow](https://github.com/nvie/gitflow), Git [submodules](.gitmodules) etc.) by running:
+3. **`/!\ IMPORTANT`**: Once cloned, initiate your local copy of the repository ([Git-flow](https://github.com/nvie/gitflow), Git submodules, etc.) by running:
 
         $> cd dotfiles
         $> make setup

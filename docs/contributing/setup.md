@@ -17,4 +17,4 @@ As mentioned in the [installation notes](/), to make your local copy of the repo
 
 	    $> make setup
 
-This will also initiate the [Git submodules of this repository](.gitmodules).
+This will also initiate the Git submodules of this repository.
