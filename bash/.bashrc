@@ -421,8 +421,6 @@ __set_my_prompt() {
 # USER TOOLS
 # -------------------------------------------------------------------
 
-# Check if the current user is an admin user
-
 # XCS Portal / XF
 if ! (($IS_ADMIN)) && [ -f /XF/App/Scripts/xf_Globalenv.rc ]; then
     source /XF/App/Scripts/xf_Globalenv.rc
