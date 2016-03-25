@@ -48,6 +48,11 @@
 # Get rid of mail notification
 unset MAILCHECK
 
+# Define the boolean IS_ADMIN
+echo "root localadmin" | grep -F -q -w "$LOGNAME"
+(( IS_ADMIN = $? == 0 ? 1 : 0))
+
+
 # ----------------------------------------------------------------------
 #  SHELL OPTIONS
 # ----------------------------------------------------------------------
@@ -171,6 +176,11 @@ C_INCLUDE_PATH=/usr/local/include
 CPLUS_INCLUDE_PATH=${C_INCLUDE_PATH}
 LIBRARY_PATH=/usr/lib:/usr/local/lib
 DYLD_FALLBACK_LIBRARY_PATH=${LIBRARY_PATH}
+
+# GPFS admin commands
+if (($IS_ADMIN)) && [ -d /usr/lpp/mmfs/bin ] ; then
+    PATH="$PATH:/usr/lpp/mmfs/bin/"
+fi
 
 # ----------------------------------------------------------------------
 # PAGER / EDITOR
@@ -412,8 +422,8 @@ __set_my_prompt() {
 # -------------------------------------------------------------------
 
 # XCS Portal / XF
-if [ -f /XF/v2.3/App/Scripts/xf_Globalenv.rc ]; then
-    source /XF/v2.3/App/Scripts/xf_Globalenv.rc
+if ! (($IS_ADMIN)) && [ -f /XF/App/Scripts/xf_Globalenv.rc ]; then
+    source /XF/App/Scripts/xf_Globalenv.rc
     export XF_VNC_GEOMETRY="-geometry 1280x1024"
 fi
 

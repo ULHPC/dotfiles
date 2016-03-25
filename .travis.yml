@@ -7,9 +7,6 @@ os:
 before_script:
   - source ./tests/setup_bats.sh
 addons:
-  apt:
-    packages:
-    - zsh
   hosts:
     - travis.dev
 env:
