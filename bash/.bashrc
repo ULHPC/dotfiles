@@ -375,18 +375,6 @@ __colorized_exit_status() {
                                 echo -e '\[\e[01;31m\]'\$status; fi)"
 }
 
-# Simple (basic) prompt
-__set_simple_prompt() {
-    unset PROMPT_COMMAND
-    PS1="[\u@\h] \w(${DOMAIN}) ${P}> "
-}
-
-# most compact version
-__set_compact_prompt() {
-    unset PROMPT_COMMAND
-    PS1="${COLOR_USER}${P}${RESET_COLOR}> "
-}
-
 ###########
 # my prompt; the format is as follows:
 #
