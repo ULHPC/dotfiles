@@ -161,9 +161,13 @@ esac
 PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
 PATH="/usr/local/bin:$PATH"
 
-# put ~/bin on PATH if you have it
+# put ~/bin on PATH if it exists
 if [ -d "$HOME/bin" ]; then
     PATH="$PATH:$HOME/bin"
+fi
+# put ~/.local/bin on PATH if it exists
+if [ -d "$HOME/.local/bin" ]; then
+    PATH="$PATH:$HOME/.local/bin"
 fi
 MANPATH="/usr/share/man:/usr/local/share/man:$MANPATH"
 
@@ -463,7 +467,7 @@ test -f ~/.bash_private && . ~/.bash_private || true
 # RVM specific (see http://beginrescueend.com/)
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
 
-PATH=$PATH:$HOME/bin:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 # condense PATH entries
 PATH="$(puniq "$PATH")"
