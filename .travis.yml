@@ -1,18 +1,21 @@
 language: bash
 sudo: false
 cache:
-  - apt
+- apt
 os:
-  - linux
+- linux
 before_script:
-  - source ./tests/setup_bats.sh
+- source ./tests/setup_bats.sh
 addons:
   hosts:
-    - travis.dev
+  - travis.dev
 env:
-  - TRAVIS_CI_RUN=true GIT_SSH='ssh -o StrictHostKeyChecking=no' GIT_AUTHOR_NAME='Travis CI' GIT_AUTHOR_EMAIL='travis@example.com'
+- TRAVIS_CI_RUN=true GIT_SSH='ssh -o StrictHostKeyChecking=no' GIT_AUTHOR_NAME='Travis CI' GIT_AUTHOR_EMAIL='travis@example.com'
 script:
-  - bats tests
+- bats tests
 notifications:
   email:
     on_success: never
+  slack:
+    rooms:
+      secure: S5njaNpzoz3cgjHhGktwE+1Y0BbhADN224OqJoO3RuS1p4hcpvj+YrAfBQGAAm1bH4bPj5e+vJskAELH8GRCgGUHdKJurBM0KHbfSHOM+6wc8iemlyUu9j6x8j17n5BDgKzHgf/WyiQN9GvF8rLWCCdRdlCuaUkLujKQpQk4Wgc=
