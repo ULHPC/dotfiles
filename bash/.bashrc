@@ -340,7 +340,7 @@ fi
 
 # Configure a set of useful variables for the prompt
 if [[ -e /proc/sys/kernel/hostname ]] ; then
-    FQDN=$(cat /proc/sys/kernel/hostname)
+    DOMAIN=$(cat /proc/sys/kernel/hostname | cut -d '.' -f 2)
 elif [[ "$(echo $UNAME | grep -c -i -e '^.*bsd$')" == "1" ]] ; then
     DOMAIN=$(hostname | cut -d '.' -f 2)
 else
