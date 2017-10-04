@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 ################################################################################
 # test_helper.bash -
-# Time-stamp: <Thu 2016-03-03 14:54 svarrette>
+# Time-stamp: <Wed 2017-10-04 14:22:30 hcartiaux>
 #
 # Copyright (c) 2016 Sebastien Varrette <Sebastien.Varrette@uni.lu>
 #
@@ -16,7 +16,7 @@ DOTFILES_D=${DOTFILES_D:=$HOME/.dotfiles}
 TARGET=${TARGET:=$HOME}
 
 
-# See https://github.com/jasonkarns/bats-assert
+# See https://github.com/ztombol/bats-assert
 # Note: flunk forces a test failure with an optional message
 load helpers/assertions/all
 
