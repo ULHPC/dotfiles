@@ -18,7 +18,7 @@ TARGET=${TARGET:=$HOME}
 
 # See https://github.com/ztombol/bats-assert
 # Note: flunk forces a test failure with an optional message
-load helpers/assertions/all
+load helpers/assertions/load
 
 
 print_error_and_exit() {
