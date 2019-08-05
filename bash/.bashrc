@@ -215,10 +215,7 @@ test -n "$PS1" && test "$bmajor" -gt 1 && {
                  /opt/local/etc/bash_completion \
                  /etc/bash_completion
         do
-            test -f $f && (
-                . $f
-                break
-            )
+            test -f $f && . $f && break
         done
 }
 unset bash bmajor
