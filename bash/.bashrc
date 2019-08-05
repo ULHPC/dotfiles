@@ -196,7 +196,8 @@ export EDITOR
 
 # Default pager ('less' is so much better than 'more'...)
 if test -n "$(command -v less)" ; then
-    PAGER="less -FirSwX"
+    #PAGER="less -FirSwX"
+    PAGER=less
     MANPAGER="less -FiRswX"
 else
     PAGER=more
