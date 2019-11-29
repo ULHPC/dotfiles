@@ -2,9 +2,11 @@
 # ~/.bash_profile
 #
 
-for beforehook in ~/.bash.before.d/* ; do
-    . "$beforehook"
-done
+if [[ -d ~/.bash.before.d ]] ; then
+    for beforehook in ~/.bash.before.d/* ; do
+        . "$beforehook"
+    done
+fi
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
