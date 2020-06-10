@@ -16,7 +16,3 @@ if [ -n "$(which brew 2>/dev/null)" ]; then
     fi
 fi
 
-# Read sysadmin configuration
-if [ -f "$HOME/.sysadminrc" ]; then
-   . "$HOME/.sysadminrc"
-fi
