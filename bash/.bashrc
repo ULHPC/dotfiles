@@ -267,6 +267,9 @@ test -n "$INTERACTIVE" && test -n "$OAR_NODE_FILE" && (
 HISTSIZE=10000
 HISTFILESIZE=20000
 
+# Lines which begin with a space character are not saved in the history list.
+HISTCONTROL=ignorespace
+
 # Add date and time to the history
 HISTTIMEFORMAT="[%d/%m/%Y %H:%M:%S] "
 
