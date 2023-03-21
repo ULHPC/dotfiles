@@ -173,13 +173,13 @@ MANPATH="/usr/share/man:/usr/local/share/man:$MANPATH"
 
 # === Programming stuff ===
 # pkg-config settings
-PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+# PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
 
 # C/C++ include
 C_INCLUDE_PATH=/usr/local/include
 CPLUS_INCLUDE_PATH=${C_INCLUDE_PATH}
-LIBRARY_PATH=/usr/lib:/usr/local/lib
-DYLD_FALLBACK_LIBRARY_PATH=${LIBRARY_PATH}
+# LIBRARY_PATH=/usr/lib:/usr/local/lib
+# DYLD_FALLBACK_LIBRARY_PATH=${LIBRARY_PATH}
 
 # GPFS admin commands
 if (($IS_ADMIN)) && [ -d /usr/lpp/mmfs/bin ] ; then
@@ -459,8 +459,9 @@ test -n "$INTERACTIVE" -a -n "$LOGIN" && {
     uptime
 }
 
-export PKG_CONFIG_PATH
-export C_INCLUDE_PATH   CPLUS_INCLUDE_PATH   LIBRARY_PATH   DYLD_FALLBACK_LIBRARY_PATH
+# export PKG_CONFIG_PATH
+export C_INCLUDE_PATH   CPLUS_INCLUDE_PATH
+# export LIBRARY_PATH   DYLD_FALLBACK_LIBRARY_PATH
 
 # Eventually load your custom aliases
 test -f ~/.bash_aliases && . ~/.bash_aliases || true
