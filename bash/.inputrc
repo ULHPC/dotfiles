@@ -16,8 +16,8 @@
 # - https://github.com/hcartiaux/dotfiles/blob/master/bash/inputrc
 # - https://github.com/rtomayko/dotfiles/blob/rtomayko/.inputrc
 
-# do not bell on tab-completion
-set bell-style bell
+# no audible bell !
+set bell-style visible
 
 set expand-tilde off
 set horizontal-scroll-mode off
