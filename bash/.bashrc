@@ -413,19 +413,6 @@ __set_my_prompt() {
     PS1="$(__colorized_exit_status) ${LIGHT_CYAN}[\t]${RESET_COLOR} ${COLOR_USER}\u${RESET_COLOR}@${CYAN_UNDERLINE}\h${RESET_COLOR}(${PS1_EXTRAINFO}) ${BLUE}\W${RESET_COLOR}${GREEN}\$(__git_ps1 \" (%s)\")\$(__svn_ps1)${RESET_COLOR}${P}> "
 }
 
-# -------------------------------------------------------------------
-# USER TOOLS
-# -------------------------------------------------------------------
-
-# XCS Portal / XF
-if ! (($IS_ADMIN)) && [ -f /XF/App/Scripts/xf_Globalenv.rc ]; then
-    source /XF/App/Scripts/xf_Globalenv.rc
-    export XF_VNC_GEOMETRY="-geometry 1280x1024"
-fi
-
-# PDSH options
-export PDSH_SSH_ARGS_APPEND="-q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PreferredAuthentications=publickey"
-
 # --------------------------------------------------------------------
 # PATH MANIPULATION FUNCTIONS (thanks rtomayko ;) )
 # --------------------------------------------------------------------
